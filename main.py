@@ -1,23 +1,29 @@
+from typing import Tuple
+
 CHUNK_METADATA = {
     'parens': {
         'opener': "(",
         'closer': ")",
-        'points': 3
+        'points': 3,
+        'autocomplete_points': 1
     },
     'square': {
         'opener': "[",
         'closer': "]",
-        'points': 57
+        'points': 57,
+        'autocomplete_points': 2
     },
     'curly': {
         'opener': "{",
         'closer': "}",
-        'points': 1197
+        'points': 1197,
+        'autocomplete_points': 3
     },
     'angle': {
         'opener': "<",
         'closer': ">",
-        'points': 25137
+        'points': 25137,
+        'autocomplete_points': 4
     }
 }
 
@@ -51,11 +57,40 @@ def check_navdata(nav: str) -> int:
     return 0
 
 
-if __name__ == '__main__':
+def repair_navdata(nav: str) -> Tuple[str, int]:
+    """Autocompletes navdata lines which are incomplete.
+
+    Args:
+        nav: A string containing navigation chunks
+
+    Returns:
+        A tuple containing a string representing the repaired navdata and
+        an integer representing the autocomplete score.
+    """
+
+    nav_stack = []
+    for char in nav:
+        if char in OPENING_BRACKETS:
+            nav_stack.append(char)
+        if char in CLOSING_BRACKETS:
+            nav_stack.pop()
+
     score = 0
+    while len(nav_stack) > 0:
+        chunk_opener = nav_stack.pop()
+        for chunk_type in CHUNK_METADATA.values():
+            if chunk_opener == chunk_type.get('opener'):
+                nav = f"{nav}{chunk_type.get('closer')}"
+                score = (score * 5) + chunk_type.get('autocomplete_points')
+
+    return nav, score
+
+
+if __name__ == '__main__':
+    validation_score = 0
     with open("inputs.txt", "r") as f:
         for navdata in f.readlines():
-            score += check_navdata(navdata)
+            validation_score += check_navdata(navdata)
 
-    print(score)
+    print(validation_score)
 
