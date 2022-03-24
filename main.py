@@ -2,11 +2,13 @@
 opening_brackets = "([{<"
 closing_brackets = ")]}>"
 
+
 def check_navdata(nav: str) -> bool:
     """Validates a navigation subsystem's data
 
     Checks navigation data for corrupted chunks and returns a boolean indicating whether the nav data is valid or not.
     """
+
     nav_stack = []
 
     for char in nav:
