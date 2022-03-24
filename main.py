@@ -16,7 +16,7 @@ def check_navdata(nav: str) -> bool:
             chunk_opener = nav_stack.pop()
             # TODO(arepavich): Investigate pairing chunk openers/closers to allow concise checking of characters
             if char == ")" and chunk_opener != "(":
-                return True
+                return False
             elif char == "]" and chunk_opener != "[":
                 return False
             elif char == "}" and chunk_opener != "{":
