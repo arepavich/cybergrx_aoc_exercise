@@ -1,28 +1,29 @@
 from typing import Tuple
 
+
 CHUNK_METADATA = {
     'parens': {
         'opener': "(",
         'closer': ")",
-        'points': 3,
+        'validation_points': 3,
         'autocomplete_points': 1
     },
     'square': {
         'opener': "[",
         'closer': "]",
-        'points': 57,
+        'validation_points': 57,
         'autocomplete_points': 2
     },
     'curly': {
         'opener': "{",
         'closer': "}",
-        'points': 1197,
+        'validation_points': 1197,
         'autocomplete_points': 3
     },
     'angle': {
         'opener': "<",
         'closer': ">",
-        'points': 25137,
+        'validation_points': 25137,
         'autocomplete_points': 4
     }
 }
@@ -52,7 +53,7 @@ def check_navdata(nav: str) -> int:
             chunk_opener = nav_stack.pop()
             for chunk_type in CHUNK_METADATA.values():
                 if char == chunk_type.get('closer') and chunk_opener != chunk_type.get('opener'):
-                    return chunk_type.get('points')
+                    return chunk_type.get('validation_points')
 
     return 0
 
