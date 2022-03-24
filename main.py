@@ -89,8 +89,23 @@ def repair_navdata(nav: str) -> Tuple[str, int]:
 
 if __name__ == '__main__':
     validation_score = 0
+    incomplete_lines = []
     with open("inputs.txt", "r") as f:
         for navdata in f.readlines():
-            validation_score += check_navdata(navdata)
+            line_score = check_navdata(navdata)
+            validation_score += line_score
+
+            if line_score == 0:
+                incomplete_lines.append(navdata)
 
     print(validation_score)
+
+    autocomplete_scores = []
+    for navdata in incomplete_lines:
+        repaired_navdata, line_score = repair_navdata(navdata)
+        autocomplete_scores.append(line_score)
+
+    # Casting to int during position calculations here will round towards 0,
+    # conveniently accounting for zero-indexing
+    print(sorted(autocomplete_scores)[int(len(autocomplete_scores) / 2)])
+
