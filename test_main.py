@@ -4,7 +4,14 @@ import main
 
 
 class TestCheckNavdata:
-    @pytest.mark.parametrize("navdata,expected", (("()", True), ("[]", True), ("(]", False), ("(()[])", True), "[)"))
+    @pytest.mark.parametrize("navdata,expected", (
+            ("()", 0),
+            ("(]", 57),
+            ("({([(<{}[<>[]}>{[]{[(<()>", 1197),
+            ("[[<[([]))<([[{}[[()]]]", 3),
+            ("[{[{({}]{}}([{[{{{}}([]", 57),
+            ("[<(<(<(<{}))><([]([]()", 3),
+            ("<{([([[(<>()){}]>(<<{{", 25137)
+    ))
     def test_check_navdata_validates_correctly(self, navdata, expected):
-        result = main.check_navdata(navdata)
-        assert result is expected
+        assert main.check_navdata(navdata) == expected
