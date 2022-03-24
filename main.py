@@ -52,4 +52,10 @@ def check_navdata(nav: str) -> int:
 
 
 if __name__ == '__main__':
-    pass
+    score = 0
+    with open("inputs.txt", "r") as f:
+        for navdata in f.readlines():
+            score += check_navdata(navdata)
+
+    print(score)
+
