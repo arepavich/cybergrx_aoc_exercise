@@ -18,9 +18,6 @@ class TestCheckNavdata:
 
 
 class TestRepairNavdata:
-    def test_repair_navdata_is_callable(self):
-        main.repair_navdata("")
-
     @pytest.mark.parametrize("navdata,expected", (
             ("([]", ("([])", 1)),
             ("(<{<>}", ("(<{<>}>)", 21)),
@@ -32,4 +29,3 @@ class TestRepairNavdata:
     ))
     def test_repair_navdata_completes_line(self, navdata, expected):
         assert main.repair_navdata(navdata) == expected
-

@@ -68,6 +68,7 @@ def repair_navdata(nav: str) -> Tuple[str, int]:
         an integer representing the autocomplete score.
     """
 
+    # TODO(arepavich): Refactor this to leverage the initial processing already done by check_navdata
     nav_stack = []
     for char in nav:
         if char in OPENING_BRACKETS:
@@ -93,4 +94,3 @@ if __name__ == '__main__':
             validation_score += check_navdata(navdata)
 
     print(validation_score)
-
